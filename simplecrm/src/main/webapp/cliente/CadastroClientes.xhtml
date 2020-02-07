@@ -1,0 +1,60 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">Novo cliente</ui:define>
+    
+    <ui:define name="corpo">
+    	<f:metadata>
+			<o:viewParam name="cliente" value="#{cadastroClienteBean.cliente}" />
+		</f:metadata>
+    
+    	<h1>Novo cliente</h1>
+    	
+    	<h:form id="frmCadastro">
+    		<p:messages id="messages" autoUpdate="true" closable="true" />
+
+	    	<p:toolbar style="margin-top: 20px;">
+	    		<p:toolbarGroup>
+	    			<p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroClienteBean.salvar}" update="frmCadastro"/>
+	    		</p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
+					<p:button value="Pesquisa" outcome="/cliente/PesquisaClientes.xhtml"/>
+				</p:toolbarGroup>
+	    	</p:toolbar>
+	    	
+	    	<p:panelGrid columns="2" id="painel" columnClasses="label, field" style="width: 100%;">
+	    		<p:outputLabel value="Nome" for="nome"/>
+	    		<p:inputText id="nome" size="60" maxlength="60" value="#{cadastroClienteBean.cliente.nome}"/>
+	    		
+	    		<p:outputLabel value="CPF" for="cpf"/>
+	    		<p:inputMask id="cpf" size="14" maxlength="14" value="#{cadastroClienteBean.cliente.cpf}" mask="999.999.999-99"/>
+	    		
+	    		<p:outputLabel value="RG" for="rg"/>
+	    		<p:inputMask id="rg" size="12" maxlength="60" value="#{cadastroClienteBean.cliente.rg}" mask="99.999.999-9"/>
+	    		
+	    		<p:outputLabel value="Endereço" for="endereco"/>
+	    		<p:inputText id="endereco" size="60" maxlength="60" value="#{cadastroClienteBean.cliente.endereco}" />
+	    		
+	    		<p:outputLabel value="Telefone" for="telefone"/>
+	    		<p:inputMask id="telefone" size="14" maxlength="14" value="#{cadastroClienteBean.cliente.telefone}" mask="(99)999999999"/>
+	    		
+	    		<p:outputLabel value="Data de Nascimento" for="dataNascimento"/>
+	    		<p:inputMask id="dataNascimento" size="10" maxlength="10" value="#{cadastroClienteBean.cliente.dataNascimento}" mask="99/99/9999">
+	    		  <f:convertDateTime dateStyle="short" pattern="dd/MM/yyyy" type="date"/>
+	    		</p:inputMask>
+	    		
+	    		<p:outputLabel value="Categorias de Interesse" for="categorias"/>
+				<h:selectManyCheckbox id="categorias" styleClass="many-checkbox" 
+				  value="#{cadastroClienteBean.cliente.categorias}" collectionType="java.util.ArrayList">
+				  <f:selectItems value="#{cadastroClienteBean.categorias}" var="categoria" 
+				    itemLabel="#{categoria.nome}" itemValue="#{categoria}" />
+				</h:selectManyCheckbox>	
+	    	</p:panelGrid>
+    	</h:form>
+    </ui:define>
+</ui:composition>

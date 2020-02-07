@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	
+	<persistence-unit name="simplecrmPU" transaction-type="RESOURCE_LOCAL">
+	
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
+		<class>localhost.erickdomingues.simplecrm.model.Cliente</class>
+		<class>localhost.erickdomingues.simplecrm.model.Categoria</class>
+		<class>localhost.erickdomingues.simplecrm.model.Produto</class>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/simplecrm?useTimezone=true&amp;serverTimezone=UTC"/>
+			<property name="javax.persistence.jdbc.user" value="erick"/>
+			<property name="javax.persistence.jdbc.password" value="erick"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+			
+			<!-- validate | update | create | create-drop -->
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+		</properties>
+	</persistence-unit>
+	
+</persistence>

@@ -1,0 +1,58 @@
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui">
+
+  <ui:define name="titulo">Pesquisa de Produtos</ui:define>
+    
+  <ui:define name="corpo">
+    <h1>Pesquisa de Produtos</h1>
+    	
+    <h:form id="frmPesquisa">
+      <p:messages id="messages" autoUpdate="true" closable="true" />
+    		
+      <p:toolbar style="margin-top: 20px">
+        <p:toolbarGroup>
+    	  <p:commandButton value="Novo" id="botaoNovo" action="/produto/CadastroProdutos.xhtml"/>
+    	</p:toolbarGroup>
+      </p:toolbar>
+    	
+	  <p:dataTable id="produtosTable" value="#{pesquisaProdutoBean.produtos}" var="produto" emptyMessage="Nenhum produto encontrado." rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+		<p:column headerText="Código">
+		  <h:outputText value="#{produto.codigo}"/>
+		</p:column>
+		
+		<p:column headerText="Nome">
+		  <h:outputText value="#{produto.nome}" />
+		</p:column>
+		
+		<p:column headerText="Descrição">
+		  <h:outputText value="#{produto.descricao}" />
+		</p:column>	
+		
+		<p:column headerText="Categoria">
+		  <h:outputText value="#{produto.categoria.nome}" />
+		</p:column>	
+		      
+		<p:column style="width: 100px; text-align: center">
+		  <p:button outcome="/produto/CadastroProdutos" icon="ui-icon-pencil" title="Editar">
+		 	<f:param name="produto" value="#{produto.codigo}"/>
+		  </p:button>
+		  <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()" process="@this" update=":frmPesquisa:confirmacaoExclusaoDialog">
+		    <f:setPropertyActionListener target="#{pesquisaProdutoBean.produto}" value="#{produto}" />
+		  </p:commandButton>
+		</p:column>
+	  </p:dataTable>
+		    
+	  <p:confirmDialog id="confirmacaoExclusaoDialog" widgetVar="confirmacaoExclusao"
+	  message="Tem certeza que deseja excluir a produto #{pesquisaProdutoBean.produto.nome}?"  
+	  header="Exclusão de produto" severity="alert">
+	    <p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
+	    <p:commandButton value="Sim" update=":frmPesquisa:produtosTable"
+	    onclick="confirmacaoExclusao.hide()" action="#{pesquisaProdutoBean.excluir}" />
+	  </p:confirmDialog>
+	</h:form>
+  </ui:define>
+</ui:composition>
